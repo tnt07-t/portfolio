@@ -1,0 +1,13 @@
+.env
+.env.local
+.env.*.local
+.claude/
+node_modules
+.next
+.turbo
+dist
+build
+*.log
+.DS_Store
+CLAUDE.md
+git 
