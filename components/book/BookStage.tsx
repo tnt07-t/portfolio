@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { chapters } from '@/lib/content'
 import Cover from './Cover'
 import Highlights from './Highlights'
 import Contents from './Contents'
 import ChapterDivider from './ChapterDivider'
-import TopBar from './TopBar'
+import Wordmark from '@/components/nav/Wordmark'
+import { BookNavContext } from './bookNav'
 
 interface PageDescriptor {
   key: string
@@ -55,11 +57,67 @@ function smootherstep(p: number) {
   return p * p * p * (p * (p * 6 - 15) + 10)
 }
 
+// Page index a chapter href lands on (cover=0, highlights=1, contents=2, chapters after).
+function pageIndexForHref(href: string) {
+  const ci = chapters.findIndex((c) => c.href === href)
+  return ci < 0 ? -1 : 3 + ci
+}
+
+// Flip-through total duration. Constant regardless of how many pages are flipped
+// (per-page time = TOTAL ÷ pages), so impatience stays the same near or far.
+const FLIP_TOTAL_MS = 820
+
 export default function BookStage() {
+  const router = useRouter()
   const stageRef = useRef<HTMLDivElement>(null)
   const pageRefs = useRef<(HTMLDivElement | null)[]>([])
   const curlRefs = useRef<(HTMLDivElement | null)[]>([])
   const barRef = useRef<HTMLElement>(null)
+  const animatingRef = useRef(false)
+
+  // Click a contents entry → flip through to that chapter's page, then navigate.
+  const flipTo = useCallback(
+    (href: string) => {
+      const stage = stageRef.current
+      const target = pageIndexForHref(href)
+      const reduce =
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.innerWidth < 720
+      // No 3D flip on mobile / reduced-motion (or unknown target): just navigate;
+      // the route cross-fade in app/template.tsx carries the transition.
+      if (!stage || target < 0 || reduce) {
+        router.push(href)
+        return
+      }
+      if (animatingRef.current) return
+      animatingRef.current = true
+
+      const range = stage.offsetHeight - window.innerHeight
+      const seg = range / (N - 1)
+      const stageTopDoc = stage.getBoundingClientRect().top + window.scrollY
+      const start = window.scrollY
+      const end = stageTopDoc + target * seg
+      const docEl = document.documentElement
+      const prevBehavior = docEl.style.scrollBehavior
+      docEl.style.scrollBehavior = 'auto' // beat CSS smooth-scroll; we ease ourselves
+
+      const t0 = performance.now()
+      const step = (now: number) => {
+        // Linear progress → each intermediate page gets an equal slice of time.
+        const p = Math.min((now - t0) / FLIP_TOTAL_MS, 1)
+        window.scrollTo(0, start + (end - start) * p)
+        if (p < 1) {
+          requestAnimationFrame(step)
+        } else {
+          docEl.style.scrollBehavior = prevBehavior
+          animatingRef.current = false
+          router.push(href)
+        }
+      }
+      requestAnimationFrame(step)
+    },
+    [router],
+  )
 
   useEffect(() => {
     const stage = stageRef.current
@@ -177,7 +235,7 @@ export default function BookStage() {
   }, [])
 
   return (
-    <>
+    <BookNavContext.Provider value={{ flipTo }}>
       {/* subtle paper grain over everything */}
       <div
         aria-hidden
@@ -193,7 +251,7 @@ export default function BookStage() {
         }}
       />
 
-      <TopBar ref={barRef} />
+      <Wordmark ref={barRef} />
 
       <div id="top" />
 
@@ -263,6 +321,6 @@ export default function BookStage() {
           ))}
         </div>
       </div>
-    </>
+    </BookNavContext.Provider>
   )
 }
