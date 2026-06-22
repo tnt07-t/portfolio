@@ -5,17 +5,18 @@ import Caret from './Caret'
 import { BookActiveContext } from './book/bookActive'
 
 /**
- * A chapter title that types itself out with a solid (non-blinking) caret —
- * no looping while at rest.
+ * A chapter title that types itself out ONCE, fully, with a solid (non-blinking)
+ * caret. Once it starts it always runs to completion — further scrolling never
+ * interrupts it — and it never replays, so the title is always shown whole and
+ * readable. No looping.
  *
- * How "on screen" is detected depends on context:
+ * When it starts depends on context:
  *  • flip book — the 3D stage stacks every page in the same place, so an
  *    IntersectionObserver can't tell which is shown. BookActiveContext reports
- *    the page coming into view (this page = triggerId), and the title RE-types
- *    each time its page becomes active — so it replays whenever you flip to it,
- *    forward or backward.
+ *    the page coming into view (this page = triggerId); the title types the
+ *    first time its page becomes active (forward or backward).
  *  • routes & mobile book — normal document scroll, so a plain
- *    IntersectionObserver types it once when the heading scrolls into view.
+ *    IntersectionObserver fires the first time the heading scrolls into view.
  *
  * SSR/no-JS safe: first paint renders the full title (state starts whole), so
  * the title is always present and there's no hydration mismatch. Under
@@ -39,16 +40,19 @@ export default function TypingTitle({
   const full = text.length
   const [count, setCount] = useState(full)
   const ref = useRef<HTMLSpanElement>(null)
-  const started = useRef(false)
+  const started = useRef(false) // type exactly once, ever
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const { mode, activeId } = useContext(BookActiveContext)
 
   const willAnimate = () =>
     !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches && full > 0
 
-  // (Re)start the reveal from an empty title.
-  const typeFromStart = () => {
-    if (timer.current) clearTimeout(timer.current)
+  // Reveal from empty and run to completion. Guarded by `started` so it fires
+  // once, and the tick chain is never cleared by scrolling, so it always
+  // finishes typing the whole title.
+  const start = () => {
+    if (started.current) return
+    started.current = true
     let c = 0
     setCount(0)
     const tick = () => {
@@ -64,27 +68,17 @@ export default function TypingTitle({
     if (willAnimate()) setCount(0)
   }, [full])
 
-  // Flip book: (re)type every time this page becomes the one coming into view,
-  // so it replays whenever you flip to it — forward or backward.
+  // Flip book: type the first time this page becomes the one coming into view.
   useEffect(() => {
     if (mode !== 'flip' || !willAnimate()) return
-    if (triggerId == null || activeId !== triggerId) return
-    typeFromStart()
-    return () => {
-      if (timer.current) clearTimeout(timer.current)
-    }
+    if (triggerId != null && activeId === triggerId) start()
   }, [mode, activeId, triggerId, full])
 
-  // Routes & plain (mobile) book: type when the heading scrolls into view.
+  // Routes & plain (mobile) book: type the first time the heading scrolls in.
   useEffect(() => {
     if (mode === 'flip' || !willAnimate()) return
     const el = ref.current
     if (!el) return
-    const start = () => {
-      if (started.current) return
-      started.current = true
-      typeFromStart()
-    }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
