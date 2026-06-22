@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Chapter } from '@/lib/types'
 import Wordmark from '@/components/nav/Wordmark'
 import PaperGrain from '@/components/PaperGrain'
+import Caret from '@/components/Caret'
 import ContactRow from './ContactRow'
 
 const MONO = 'var(--font-mono)'
@@ -58,6 +59,7 @@ export default function ChapterShell({
           }}
         >
           {chapter.title}
+          <Caret color="var(--forest-deep)" />
         </h1>
         <p style={{ marginTop: 16, fontSize: 'clamp(16px,1.8vw,20px)', color: '#6B6358', maxWidth: '56ch' }}>
           {chapter.blurb}
