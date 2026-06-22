@@ -27,6 +27,13 @@ export default function SpineMenu() {
   const onCover = pathname === '/'
   const lineColor = open ? '#E8C97A' : onCover ? '#C9A24B' : '#2F4A3C'
 
+  // Close the menu and release its scroll lock; the <Link> itself does the
+  // client-side navigation to the chapter route (Cover → "/").
+  const closeMenu = () => {
+    setOpen(false)
+    document.body.style.overflow = ''
+  }
+
   // Close on route change.
   useEffect(() => {
     setOpen(false)
@@ -131,14 +138,14 @@ export default function SpineMenu() {
               transition={{ duration: dur, ease: [0.22, 0.61, 0.36, 1] }}
             >
               <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.28em', color: 'rgba(201,162,75,0.7)', marginBottom: 24 }}>
-                CONTENTS
+                TABLE OF CONTENTS
               </div>
 
               <nav className="flex flex-col" aria-label="Chapters">
                 {/* Cover — the masthead, no page number. */}
                 <Link
                   href="/"
-                  onClick={() => setOpen(false)}
+                  onClick={closeMenu}
                   className="py-[8px]"
                   style={{
                     fontFamily: MONO,
@@ -157,7 +164,7 @@ export default function SpineMenu() {
                     <Link
                       key={entry.href}
                       href={entry.href}
-                      onClick={() => setOpen(false)}
+                      onClick={closeMenu}
                       className="flex items-baseline gap-3 py-[9px] transition-colors hover:text-gold-bright"
                       style={{ color: active ? '#E8C97A' : '#F3ECDF' }}
                     >
