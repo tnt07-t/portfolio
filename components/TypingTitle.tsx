@@ -39,6 +39,7 @@ export default function TypingTitle({
 }) {
   const full = text.length
   const [count, setCount] = useState(full)
+  const [done, setDone] = useState(false) // hide the caret once fully typed
   const ref = useRef<HTMLSpanElement>(null)
   const started = useRef(false) // type exactly once, ever
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -59,13 +60,17 @@ export default function TypingTitle({
       c += 1
       setCount(c)
       if (c < full) timer.current = setTimeout(tick, TYPE_MS)
+      else setDone(true) // finished — drop the caret
     }
     timer.current = setTimeout(tick, TYPE_MS)
   }
 
   // Hide to empty before paint when we're going to type, so there's no flash.
+  // When we won't animate (reduced motion / no JS), the title is already whole,
+  // so mark it done and show no caret.
   useIso(() => {
     if (willAnimate()) setCount(0)
+    else setDone(true)
   }, [full])
 
   // Flip book: type the first time this page becomes the one coming into view.
@@ -108,7 +113,7 @@ export default function TypingTitle({
   return (
     <span ref={ref}>
       {text.slice(0, count)}
-      <Caret color={caretColor} blink={false} />
+      {!done && <Caret color={caretColor} blink={false} />}
     </span>
   )
 }
