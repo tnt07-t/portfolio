@@ -1,4 +1,5 @@
 import { projects } from '@/lib/data/projects'
+import FloatIn from '@/components/FloatIn'
 
 const MONO = 'var(--font-mono)'
 const DISPLAY = 'var(--font-cabinet)'
@@ -8,9 +9,9 @@ const DISPLAY = 'var(--font-cabinet)'
 export default function ProjectsBody() {
   return (
     <div style={{ display: 'grid', gap: 'clamp(20px,3vw,32px)' }}>
-      {projects.map((p) => (
+      {projects.map((p, i) => (
+        <FloatIn key={p.name} index={i}>
         <article
-          key={p.name}
           style={{ border: '1px solid rgba(26,23,20,0.06)', borderRadius: 4, padding: 'clamp(20px,3vw,32px)', background: '#FFFFFF', boxShadow: '0 1px 2px rgba(22,36,27,0.05), 0 10px 30px rgba(22,36,27,0.06)' }}
         >
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 12, justifyContent: 'space-between' }}>
@@ -25,6 +26,7 @@ export default function ProjectsBody() {
             ))}
           </div>
         </article>
+        </FloatIn>
       ))}
     </div>
   )
