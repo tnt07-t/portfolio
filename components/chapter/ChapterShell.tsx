@@ -52,7 +52,7 @@ export default function ChapterShell({
             letterSpacing: '-0.025em',
             marginTop: 14,
             lineHeight: 0.95,
-            color: 'var(--oxblood)',
+            color: 'var(--forest-deep)',
           }}
         >
           {chapter.title}

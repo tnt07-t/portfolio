@@ -9,7 +9,6 @@ const config: Config = {
     extend: {
       colors: {
         paper: '#F6EFDF',
-        oxblood: '#7A2E22',
         ink: {
           DEFAULT: '#1A1714',
           faded: '#6B6358',
