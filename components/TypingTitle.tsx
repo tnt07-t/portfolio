@@ -5,16 +5,17 @@ import Caret from './Caret'
 import { BookActiveContext } from './book/bookActive'
 
 /**
- * A chapter title that types itself out ONCE, when its page first comes on
- * screen, then rests — no looping, no blink. A solid caret trails it as a quiet
- * "just written" mark.
+ * A chapter title that types itself out with a solid (non-blinking) caret —
+ * no looping while at rest.
  *
  * How "on screen" is detected depends on context:
  *  • flip book — the 3D stage stacks every page in the same place, so an
- *    IntersectionObserver fires for all of them at once. Instead we type when
- *    BookActiveContext reports this page (triggerId) as the active, flat one.
+ *    IntersectionObserver can't tell which is shown. BookActiveContext reports
+ *    the page coming into view (this page = triggerId), and the title RE-types
+ *    each time its page becomes active — so it replays whenever you flip to it,
+ *    forward or backward.
  *  • routes & mobile book — normal document scroll, so a plain
- *    IntersectionObserver on the heading is reliable.
+ *    IntersectionObserver types it once when the heading scrolls into view.
  *
  * SSR/no-JS safe: first paint renders the full title (state starts whole), so
  * the title is always present and there's no hydration mismatch. Under
@@ -45,16 +46,17 @@ export default function TypingTitle({
   const willAnimate = () =>
     !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches && full > 0
 
-  const start = () => {
-    if (started.current) return
-    started.current = true
+  // (Re)start the reveal from an empty title.
+  const typeFromStart = () => {
+    if (timer.current) clearTimeout(timer.current)
     let c = 0
+    setCount(0)
     const tick = () => {
       c += 1
       setCount(c)
       if (c < full) timer.current = setTimeout(tick, TYPE_MS)
     }
-    tick()
+    timer.current = setTimeout(tick, TYPE_MS)
   }
 
   // Hide to empty before paint when we're going to type, so there's no flash.
@@ -62,10 +64,15 @@ export default function TypingTitle({
     if (willAnimate()) setCount(0)
   }, [full])
 
-  // Flip book: type when the stage reports this page as the active, flat one.
+  // Flip book: (re)type every time this page becomes the one coming into view,
+  // so it replays whenever you flip to it — forward or backward.
   useEffect(() => {
     if (mode !== 'flip' || !willAnimate()) return
-    if (triggerId != null && activeId === triggerId) start()
+    if (triggerId == null || activeId !== triggerId) return
+    typeFromStart()
+    return () => {
+      if (timer.current) clearTimeout(timer.current)
+    }
   }, [mode, activeId, triggerId, full])
 
   // Routes & plain (mobile) book: type when the heading scrolls into view.
@@ -73,6 +80,11 @@ export default function TypingTitle({
     if (mode === 'flip' || !willAnimate()) return
     const el = ref.current
     if (!el) return
+    const start = () => {
+      if (started.current) return
+      started.current = true
+      typeFromStart()
+    }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
