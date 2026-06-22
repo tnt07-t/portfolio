@@ -127,7 +127,10 @@ export default function BookStage() {
           pg.style.filter = 'none'
         }
         pg.style.zIndex = String(z)
-        pg.style.pointerEvents = fp <= 0 && i === cur ? 'auto' : 'none'
+        // Keep the current page interactive while it still dominates the screen
+        // (through its dwell and the first half of its flip) so links on it —
+        // notably the cover's Résumé/socials — stay clickable, not just at rest.
+        pg.style.pointerEvents = fp < 0.5 && i === cur ? 'auto' : 'none'
 
         if (curl) {
           if (fp > 0 && fp < 1) {

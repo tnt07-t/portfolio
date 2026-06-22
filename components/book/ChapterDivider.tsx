@@ -1,6 +1,6 @@
 import type { Chapter } from '@/lib/content'
 import { profile } from '@/lib/content'
-import { GitHubIcon, LinkedInIcon, EmailIcon, mailHref } from './icons'
+import { GitHubIcon, LinkedInIcon, EmailIcon, mailHref, safeHref } from './icons'
 
 const MONO = 'var(--font-mono)'
 const DISPLAY = 'var(--font-cabinet)'
@@ -43,8 +43,8 @@ export default function ChapterDivider({
         {closing && (
           <div style={{ marginTop: 'clamp(24px,4vw,40px)', display: 'flex', gap: 11, alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.16em', color: '#2F4A3C' }}>LET&apos;S TALK —</span>
-            <a href={profile.github} aria-label="GitHub" style={contactBox} className="hover:!bg-forest hover:!text-paper"><GitHubIcon size={18} /></a>
-            <a href={profile.linkedin} aria-label="LinkedIn" style={contactBox} className="hover:!bg-forest hover:!text-paper"><LinkedInIcon size={17} /></a>
+            <a href={safeHref(profile.github)} aria-label="GitHub" style={contactBox} className="hover:!bg-forest hover:!text-paper"><GitHubIcon size={18} /></a>
+            <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" style={contactBox} className="hover:!bg-forest hover:!text-paper"><LinkedInIcon size={17} /></a>
             <a href={mailHref(profile.email)} aria-label="Email" style={contactBox} className="hover:!bg-forest hover:!text-paper"><EmailIcon size={18} /></a>
             <a href={profile.resumeUrl} style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em', color: '#FCFAF6', background: '#2F4A3C', padding: '10px 16px', borderRadius: 8, marginLeft: 4 }}>RÉSUMÉ</a>
           </div>

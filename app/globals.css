@@ -160,6 +160,13 @@ a {
   *::after {
     animation: none !important;
   }
+  /* Elements that reveal via animation start at opacity:0 — with animation
+     killed they'd stay invisible. Force their resting (revealed) state so
+     reduced-motion users still see the cover identity, terminal, etc. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* Visible keyboard focus ring (gold). */

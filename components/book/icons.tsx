@@ -34,9 +34,18 @@ export function ResumeIcon({ size = 13 }: { size?: number }) {
   )
 }
 
-/** mailto: link if a real email is set, otherwise the raw placeholder. */
+/** mailto: link if a real email is set, otherwise inert (undefined). */
 export function mailHref(email: string) {
-  return email.startsWith('[PLACEHOLDER') ? email : `mailto:${email}`
+  return email.startsWith('[PLACEHOLDER') ? undefined : `mailto:${email}`
+}
+
+/**
+ * Returns the URL, or undefined if it's still a [PLACEHOLDER] — an <a> with no
+ * href renders inert (no navigation, not focusable) instead of 404-ing on a
+ * bracketed string. Pair with the `inert` aria treatment at the call site.
+ */
+export function safeHref(url: string) {
+  return url.startsWith('[PLACEHOLDER') ? undefined : url
 }
 
 export { profile }

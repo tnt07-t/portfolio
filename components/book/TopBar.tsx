@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import { profile } from '@/lib/content'
-import { GitHubIcon, LinkedInIcon, EmailIcon, mailHref } from './icons'
+import { GitHubIcon, LinkedInIcon, EmailIcon, mailHref, safeHref } from './icons'
 
 /**
  * Fixed top bar — name (left); GitHub / LinkedIn / Email / Résumé (right).
@@ -28,10 +28,10 @@ const TopBar = forwardRef<HTMLElement>(function TopBar(_props, ref) {
         {profile.name}
       </a>
       <nav className="flex items-center gap-[14px]">
-        <a href={profile.github} aria-label="GitHub" title="GitHub" className="flex text-ink-faded transition-colors hover:text-forest">
+        <a href={safeHref(profile.github)} aria-label="GitHub" title="GitHub" className="flex text-ink-faded transition-colors hover:text-forest">
           <GitHubIcon />
         </a>
-        <a href={profile.linkedin} aria-label="LinkedIn" title="LinkedIn" className="flex text-ink-faded transition-colors hover:text-forest">
+        <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" title="LinkedIn" className="flex text-ink-faded transition-colors hover:text-forest">
           <LinkedInIcon />
         </a>
         <a href={mailHref(profile.email)} aria-label="Email" title="Email" className="flex text-ink-faded transition-colors hover:text-forest">

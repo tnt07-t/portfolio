@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { coverPopups, coverFocus, coverTerminal, profile } from '@/lib/content'
-import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon, mailHref } from './icons'
+import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon, mailHref, safeHref } from './icons'
 
 const SERIF = 'var(--font-cormorant)'
 const MONO = 'var(--font-mono)'
@@ -127,14 +127,14 @@ export default function Cover() {
               <div style={{ position: 'relative', width: 'clamp(316px,40vw,476px)', height: 'clamp(220px,27vw,330px)', background: '#0B130E', border: '2.5px solid rgba(201,162,75,0.6)', borderRadius: '13px 13px 5px 5px', boxShadow: '0 0 40px rgba(201,162,75,0.16),inset 0 0 56px rgba(0,0,0,0.72)', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.24, animation: 'glow 2.8s ease-in-out infinite', background: 'radial-gradient(circle at 50% 40%, rgba(143,182,143,0.18), transparent 72%)' }} />
 
-                <div style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(14px,1.8vw,22px)', padding: 'clamp(14px,2vw,26px)', opacity: 0, animation: 'fadeUp .8s ease 0.55s both' }}>
+                <div data-reveal style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(14px,1.8vw,22px)', padding: 'clamp(14px,2vw,26px)', opacity: 0, animation: 'fadeUp .8s ease 0.55s both' }}>
                   <Image src="/assets/author.jpg" alt={`Portrait of ${profile.name}`} width={212} height={212} style={{ flex: '0 0 auto', height: 'clamp(142px,18vw,212px)', width: 'auto', maxWidth: '47%', objectFit: 'cover', objectPosition: '50% 12%', borderRadius: 9, border: '1px solid rgba(201,162,75,0.5)', boxShadow: '0 12px 28px rgba(0,0,0,0.55)' }} priority />
                   <div style={{ minWidth: 0 }}>
                     <h1 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(24px,2.9vw,40px)', lineHeight: 0.9, letterSpacing: '0.01em', color: '#E8C97A', textShadow: '0 1px 2px rgba(0,0,0,0.55)', whiteSpace: 'nowrap' }}>{profile.name}</h1>
                     <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(11px,1.25vw,14px)', color: 'rgba(216,180,94,0.92)', marginTop: 3, whiteSpace: 'nowrap' }}>{profile.tagline}</div>
                     <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-                      <a href={profile.github} aria-label="GitHub" title="GitHub" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><GitHubIcon size={14} /></a>
-                      <a href={profile.linkedin} aria-label="LinkedIn" title="LinkedIn" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><LinkedInIcon size={13} /></a>
+                      <a href={safeHref(profile.github)} aria-label="GitHub" title="GitHub" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><GitHubIcon size={14} /></a>
+                      <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" title="LinkedIn" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><LinkedInIcon size={13} /></a>
                       <a href={mailHref(profile.email)} aria-label="Email" title="Email" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><EmailIcon size={14} /></a>
                       <a href={profile.resumeUrl} aria-label="Résumé" title="Résumé" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><ResumeIcon size={13} /></a>
                     </div>
