@@ -267,8 +267,12 @@ export default function BookStage() {
         bar.style.opacity = show ? '1' : '0'
       }
 
-      // Publish the active page (only on change) so its heading can type in.
-      const activeDomId = PAGES[i].domId ?? null
+      // Publish the page coming into view (only on change) so its heading can
+      // type in. Switch to the incoming page partway through the turn — as it
+      // rotates into view — so the title is already typing as the page flips,
+      // rather than pausing until the flip lands flat.
+      const incoming = i < N - 1 && f > 0.4
+      const activeDomId = PAGES[incoming ? i + 1 : i].domId ?? null
       if (lastActiveRef.current !== activeDomId) {
         lastActiveRef.current = activeDomId
         setActiveId(activeDomId)
