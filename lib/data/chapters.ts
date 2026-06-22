@@ -6,8 +6,8 @@ import { aboutChapter } from './about'
 
 /** The 4 chapter teasers, in order — drives both the book dividers and contents. */
 export const chapters: Chapter[] = [
-  projectsChapter,
   experienceChapter,
+  projectsChapter,
   skillsChapter,
   aboutChapter,
 ]
@@ -15,6 +15,6 @@ export const chapters: Chapter[] = [
 /** Table of contents, derived from the chapters so there's one source. */
 export const contents: ContentsEntry[] = chapters.map((c, i) => ({
   title: c.title,
-  page: `p. ${String(i + 1).padStart(2, '0')}`,
+  page: `${i + 1}`,
   href: c.href,
 }))

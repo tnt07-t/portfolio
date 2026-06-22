@@ -64,6 +64,10 @@ a {
   border-bottom: 1.5px dotted rgba(26, 23, 20, 0.28);
   transform: translateY(-5px);
 }
+/* Same leader, light-toned for the dark spine menu panel. */
+.leader-gold {
+  border-bottom-color: rgba(201, 162, 75, 0.32);
+}
 
 /* ── Cover entrance choreography (keyframes ported verbatim) ── */
 @keyframes cuebob {

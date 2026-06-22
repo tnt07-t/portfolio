@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
-import type { AboutPayload } from '@/lib/types'
-import { fetchApi } from '@/lib/api-base'
+import { aboutChapter, aboutSections } from '@/lib/data/about'
 import ChapterShell from '@/components/chapter/ChapterShell'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'About — Tran Tran',
@@ -12,11 +9,12 @@ export const metadata: Metadata = {
 
 const DISPLAY = 'var(--font-cabinet)'
 
-export default async function AboutPage() {
-  const { chapter, sections, contact } = await fetchApi<AboutPayload>('/api/about')
+export default function AboutPage() {
+  const chapter = aboutChapter
+  const sections = aboutSections
 
   return (
-    <ChapterShell chapter={chapter} contactKicker={contact.kicker} prevLabel="Back to the book">
+    <ChapterShell chapter={chapter} contactKicker="LET'S TALK —" prevLabel="Back to the book">
       <div style={{ display: 'grid', gap: 'clamp(24px,4vw,40px)', maxWidth: '64ch' }}>
         {sections.map((s) => (
           <section key={s.heading}>

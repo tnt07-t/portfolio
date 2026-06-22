@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
-import type { ExperiencePayload } from '@/lib/types'
-import { fetchApi } from '@/lib/api-base'
+import { experience, experienceChapter } from '@/lib/data/experience'
 import ChapterShell from '@/components/chapter/ChapterShell'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Experience — Tran Tran',
@@ -13,8 +10,8 @@ export const metadata: Metadata = {
 const MONO = 'var(--font-mono)'
 const DISPLAY = 'var(--font-cabinet)'
 
-export default async function ExperiencePage() {
-  const { chapter, experience } = await fetchApi<ExperiencePayload>('/api/experience')
+export default function ExperiencePage() {
+  const chapter = experienceChapter
 
   return (
     <ChapterShell chapter={chapter} prevLabel="Back to the book">

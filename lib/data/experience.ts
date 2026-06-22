@@ -1,10 +1,10 @@
-import type { Chapter, ExperienceItem, ExperiencePayload } from '@/lib/types'
+import type { Chapter, ExperienceItem } from '@/lib/types'
 
 export const experienceChapter: Chapter = {
-  number: 'CHAPTER 02',
+  number: 'CHAPTER 01',
   title: 'Experience',
   blurb: 'FPT Software and SupplyBistro in full — roles, scope, outcomes.',
-  footer: '— 02 —',
+  footer: '— 01 —',
   href: '/experience',
 }
 
@@ -30,8 +30,3 @@ export const experience: ExperienceItem[] = [
     ],
   },
 ]
-
-export const experiencePayload: ExperiencePayload = {
-  chapter: experienceChapter,
-  experience,
-}

@@ -1,10 +1,9 @@
 /**
  * Shared content types for the portfolio.
  *
- * Data lives in lib/data/* (one module per domain) and is served both directly
- * (server components) and over the per-chapter API routes in app/api/*. Keeping
- * the shapes here means the API handlers, the data modules, and the React pages
- * all agree on one contract.
+ * Data lives in lib/data/* (one module per domain) and is imported directly by
+ * the server components that render each chapter. Keeping the shapes here means
+ * the data modules and the React pages all agree on one contract.
  */
 
 export interface SocialLink {
@@ -106,25 +105,4 @@ export interface SkillGroup {
 export interface AboutSection {
   heading: string
   body: string
-}
-
-/* ── API response envelopes (one per chapter route) ── */
-
-export interface ProjectsPayload {
-  chapter: Chapter
-  projects: Project[]
-}
-export interface ExperiencePayload {
-  chapter: Chapter
-  experience: ExperienceItem[]
-}
-export interface SkillsPayload {
-  chapter: Chapter
-  groups: SkillGroup[]
-}
-export interface AboutPayload {
-  chapter: Chapter
-  sections: AboutSection[]
-  /** About is the closing page; it carries the contact row. */
-  contact: { kicker: string }
 }

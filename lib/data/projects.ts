@@ -1,10 +1,10 @@
-import type { Chapter, Project, ProjectsPayload } from '@/lib/types'
+import type { Chapter, Project } from '@/lib/types'
 
 export const projectsChapter: Chapter = {
-  number: 'CHAPTER 01',
+  number: 'CHAPTER 02',
   title: 'Projects',
   blurb: 'Uplift, Lumeo and more — the build story behind each.',
-  footer: '— 01 —',
+  footer: '— 02 —',
   href: '/projects',
 }
 
@@ -34,8 +34,3 @@ export const projects: Project[] = [
     stack: ['[PLACEHOLDER: stack]'],
   },
 ]
-
-export const projectsPayload: ProjectsPayload = {
-  chapter: projectsChapter,
-  projects,
-}

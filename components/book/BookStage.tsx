@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { chapters } from '@/lib/content'
 import Cover from './Cover'
 import Highlights from './Highlights'
-import Contents from './Contents'
 import ChapterDivider from './ChapterDivider'
 import Wordmark from '@/components/nav/Wordmark'
 import { BookNavContext } from './bookNav'
@@ -40,7 +39,6 @@ const PAGES: PageDescriptor[] = [
     ),
   },
   { key: 'highlights', node: <Highlights />, frontBg: '#FCFAF6', backBg: '#F4EFE6' },
-  { key: 'contents', node: <Contents />, frontBg: '#FCFAF6', backBg: '#F4EFE6' },
   ...chapters.map((c, i) => ({
     key: c.title,
     node: <ChapterDivider chapter={c} closing={i === chapters.length - 1} />,
@@ -57,10 +55,10 @@ function smootherstep(p: number) {
   return p * p * p * (p * (p * 6 - 15) + 10)
 }
 
-// Page index a chapter href lands on (cover=0, highlights=1, contents=2, chapters after).
+// Page index a chapter href lands on (cover=0, highlights=1, chapters after).
 function pageIndexForHref(href: string) {
   const ci = chapters.findIndex((c) => c.href === href)
-  return ci < 0 ? -1 : 3 + ci
+  return ci < 0 ? -1 : 2 + ci
 }
 
 // Flip-through total duration. Constant regardless of how many pages are flipped

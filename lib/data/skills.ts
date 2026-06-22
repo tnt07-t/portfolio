@@ -1,4 +1,4 @@
-import type { Chapter, SkillGroup, SkillsPayload } from '@/lib/types'
+import type { Chapter, SkillGroup } from '@/lib/types'
 
 export const skillsChapter: Chapter = {
   number: 'CHAPTER 03',
@@ -14,8 +14,3 @@ export const skillGroups: SkillGroup[] = [
   { category: 'Infrastructure', items: ['[PLACEHOLDER: infra / cloud]'] },
   { category: 'Frontend', items: ['SwiftUI', 'React', 'Next.js', 'TypeScript'] },
 ]
-
-export const skillsPayload: SkillsPayload = {
-  chapter: skillsChapter,
-  groups: skillGroups,
-}

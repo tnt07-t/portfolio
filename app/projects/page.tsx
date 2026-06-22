@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
-import type { ProjectsPayload } from '@/lib/types'
-import { fetchApi } from '@/lib/api-base'
+import { projects, projectsChapter } from '@/lib/data/projects'
 import ChapterShell from '@/components/chapter/ChapterShell'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Projects — Tran Tran',
@@ -13,8 +10,8 @@ export const metadata: Metadata = {
 const MONO = 'var(--font-mono)'
 const DISPLAY = 'var(--font-cabinet)'
 
-export default async function ProjectsPage() {
-  const { chapter, projects } = await fetchApi<ProjectsPayload>('/api/projects')
+export default function ProjectsPage() {
+  const chapter = projectsChapter
 
   return (
     <ChapterShell chapter={chapter} prevLabel="Back to the book">

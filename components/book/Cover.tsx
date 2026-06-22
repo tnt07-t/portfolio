@@ -18,7 +18,7 @@ function Popup({
     <div
       style={{
         position: 'absolute',
-        [popup.side]: 0,
+        [popup.side]: right ? '7%' : 0,
         top: popup.top,
         zIndex: 7,
         maxWidth: '27%',
@@ -99,11 +99,11 @@ export default function Cover() {
           {/* soft road */}
           <svg viewBox="0 0 360 280" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', zIndex: 4 }} aria-hidden>
             <path pathLength={1} d="M28,52 C150,14 132,150 200,150 C286,150 264,250 338,244" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine 2.2s ease 1.1s both' }} />
-            <path pathLength={1} d="M78,54 C66,50 58,46 52,42" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 2.45s both' }} />
-            <path pathLength={1} d="M120,98 C84,108 58,116 34,120" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 3.95s both' }} />
-            <path pathLength={1} d="M200,150 C140,170 86,190 40,206" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 5.55s both' }} />
-            <path pathLength={1} d="M175,138 C235,98 285,66 320,46" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 5.95s both' }} />
-            <path pathLength={1} d="M300,212 C312,204 318,196 322,188" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 7.55s both' }} />
+            <path pathLength={1} d="M86,48 C72,42 56,33 50,27" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 2.45s both' }} />
+            <path pathLength={1} d="M150,113 C112,105 72,129 34,120" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 3.95s both' }} />
+            <path pathLength={1} d="M200,150 C148,158 92,200 40,206" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 5.55s both' }} />
+            <path pathLength={1} d="M168,136 C222,117 256,67 310,48" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 5.95s both' }} />
+            <path pathLength={1} d="M282,214 C301,213 303,189 322,188" fill="none" stroke="rgba(201,162,75,0.72)" strokeWidth={1.3} strokeLinecap="round" style={{ strokeDasharray: 1, strokeDashoffset: 0, animation: 'drawLine .3s ease 7.55s both' }} />
           </svg>
 
           {/* orbiting labels */}

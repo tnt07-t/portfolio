@@ -1,8 +1,8 @@
-import type { AboutPayload, AboutSection, Chapter } from '@/lib/types'
+import type { AboutSection, Chapter } from '@/lib/types'
 
 export const aboutChapter: Chapter = {
   number: 'CHAPTER 04 · THE LAST PAGE',
-  title: 'About',
+  title: 'Contact',
   blurb: 'The person behind the work.',
   footer: '— 04 · FIN —',
   href: '/about',
@@ -18,9 +18,3 @@ export const aboutSections: AboutSection[] = [
     body: '[PLACEHOLDER: passions & hobbies — what you do for fun].',
   },
 ]
-
-export const aboutPayload: AboutPayload = {
-  chapter: aboutChapter,
-  sections: aboutSections,
-  contact: { kicker: "LET'S TALK —" },
-}

@@ -1,7 +1,7 @@
 /**
  * Content barrel — re-exports every data module + shared types so existing
  * imports (`@/lib/content`) keep working. The data itself now lives split by
- * domain under lib/data/* and is served per-chapter via app/api/*.
+ * domain under lib/data/* and is imported directly where it's rendered.
  *
  * Edit content in the lib/data/* modules, not here.
  */

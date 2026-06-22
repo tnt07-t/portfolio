@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { navItems } from '@/lib/nav'
-import { profile } from '@/lib/content'
+import { contents, profile } from '@/lib/content'
 import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon, mailHref, safeHref } from '@/components/book/icons'
 
-const DISPLAY = 'var(--font-cabinet)'
+const SERIF = 'var(--font-cormorant)'
 const MONO = 'var(--font-mono)'
 
 /**
@@ -136,32 +135,47 @@ export default function SpineMenu() {
               </div>
 
               <nav className="flex flex-col" aria-label="Chapters">
-                {navItems.map((item) => {
-                  const active = item.href === pathname
+                {/* Cover — the masthead, no page number. */}
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className="py-[8px]"
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 12,
+                    letterSpacing: '0.22em',
+                    color: pathname === '/' ? '#E8C97A' : 'rgba(243,236,223,0.6)',
+                  }}
+                >
+                  COVER
+                </Link>
+
+                {/* The four chapters as a numbered table of contents. */}
+                {contents.map((entry) => {
+                  const active = entry.href === pathname
                   return (
                     <Link
-                      key={item.href}
-                      href={item.href}
+                      key={entry.href}
+                      href={entry.href}
                       onClick={() => setOpen(false)}
-                      className="group flex items-baseline gap-3 py-[10px]"
+                      className="flex items-baseline gap-3 py-[9px] transition-colors hover:text-gold-bright"
                       style={{ color: active ? '#E8C97A' : '#F3ECDF' }}
                     >
                       <span
                         style={{
-                          fontFamily: DISPLAY,
-                          fontWeight: active ? 800 : 500,
-                          fontSize: 'clamp(24px,3.4vw,32px)',
-                          letterSpacing: '-0.02em',
+                          fontFamily: SERIF,
+                          fontWeight: active ? 700 : 600,
+                          fontSize: 'clamp(22px,2.8vw,27px)',
+                          letterSpacing: '-0.01em',
                           lineHeight: 1.1,
                         }}
                       >
-                        {item.label}
+                        {entry.title}
                       </span>
-                      {active && (
-                        <span aria-hidden style={{ color: '#C9A24B', fontFamily: MONO, fontSize: 12 }}>
-                          ◆
-                        </span>
-                      )}
+                      <span className="leader leader-gold" />
+                      <span style={{ fontFamily: MONO, fontSize: 13, color: active ? '#C9A24B' : 'rgba(243,236,223,0.55)' }}>
+                        {entry.page}
+                      </span>
                     </Link>
                   )
                 })}

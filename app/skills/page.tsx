@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
-import type { SkillsPayload } from '@/lib/types'
-import { fetchApi } from '@/lib/api-base'
+import { skillGroups, skillsChapter } from '@/lib/data/skills'
 import ChapterShell from '@/components/chapter/ChapterShell'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Skills — Tran Tran',
@@ -13,8 +10,9 @@ export const metadata: Metadata = {
 const MONO = 'var(--font-mono)'
 const DISPLAY = 'var(--font-cabinet)'
 
-export default async function SkillsPage() {
-  const { chapter, groups } = await fetchApi<SkillsPayload>('/api/skills')
+export default function SkillsPage() {
+  const chapter = skillsChapter
+  const groups = skillGroups
 
   return (
     <ChapterShell chapter={chapter} prevLabel="Back to the book">
