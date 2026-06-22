@@ -137,6 +137,7 @@ export default function Cover() {
                       <a href={mailHref(profile.email)} aria-label="Email" title="Email" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><EmailIcon size={14} /></a>
                       <a href={profile.resumeUrl} aria-label="Résumé" title="Résumé" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><ResumeIcon size={13} /></a>
                     </div>
+                    <p style={{ fontFamily: SERIF, fontSize: 'clamp(9px,0.95vw,11.5px)', lineHeight: 1.45, color: 'rgba(216,180,94,0.82)', marginTop: 10, maxWidth: '30ch', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{profile.bio}</p>
                   </div>
                 </div>
 

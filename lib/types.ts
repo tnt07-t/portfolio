@@ -15,6 +15,8 @@ export interface Profile {
   name: string
   /** Short role line shown under the name on the cover. */
   tagline: string
+  /** ~3-line blurb shown under the cover contacts. */
+  bio: string
   resumeUrl: string
   github: string
   linkedin: string
