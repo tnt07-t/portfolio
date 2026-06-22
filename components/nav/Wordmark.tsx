@@ -35,6 +35,8 @@ const Wordmark = forwardRef<HTMLElement, { revealed?: boolean }>(function Wordma
       </Link>
       <a
         href={profile.resumeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         className="font-mono text-paper"
         style={{
           fontSize: 12.5,

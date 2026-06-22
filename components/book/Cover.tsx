@@ -132,10 +132,10 @@ export default function Cover() {
                     <h1 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(24px,2.9vw,40px)', lineHeight: 0.9, letterSpacing: '0.01em', color: '#E8C97A', textShadow: '0 1px 2px rgba(0,0,0,0.55)', whiteSpace: 'nowrap' }}>{profile.name}</h1>
                     <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(11px,1.25vw,14px)', color: 'rgba(216,180,94,0.92)', marginTop: 3, whiteSpace: 'nowrap' }}>{profile.tagline}</div>
                     <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-                      <a href={safeHref(profile.github)} aria-label="GitHub" title="GitHub" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><GitHubIcon size={14} /></a>
-                      <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" title="LinkedIn" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><LinkedInIcon size={13} /></a>
-                      <a href={mailHref(profile.email)} aria-label="Email" title="Email" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><EmailIcon size={14} /></a>
-                      <a href={profile.resumeUrl} aria-label="Résumé" title="Résumé" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><ResumeIcon size={13} /></a>
+                      <a href={safeHref(profile.github)} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><GitHubIcon size={14} /></a>
+                      <a href={safeHref(profile.linkedin)} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><LinkedInIcon size={13} /></a>
+                      <a href={mailHref(profile.email)} target="_blank" rel="noopener noreferrer" aria-label="Email" title="Email" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><EmailIcon size={14} /></a>
+                      <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" aria-label="Résumé" title="Résumé" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><ResumeIcon size={13} /></a>
                     </div>
                     <p style={{ fontFamily: SERIF, fontSize: 'clamp(9px,0.95vw,11.5px)', lineHeight: 1.45, color: 'rgba(216,180,94,0.82)', marginTop: 10, maxWidth: '30ch', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{profile.bio}</p>
                   </div>

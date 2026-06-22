@@ -201,6 +201,8 @@ export default function SpineMenu() {
               <div style={{ marginTop: 'auto', paddingTop: 28, borderTop: '1px solid rgba(201,162,75,0.18)' }}>
                 <a
                   href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2"
                   style={{
                     fontFamily: MONO,
@@ -216,13 +218,13 @@ export default function SpineMenu() {
                   <ResumeIcon size={14} /> RÉSUMÉ
                 </a>
                 <div style={{ display: 'flex', gap: 14, marginTop: 18, color: 'rgba(243,236,223,0.8)' }}>
-                  <a href={safeHref(profile.github)} aria-label="GitHub" title="GitHub" className="transition-colors hover:text-gold-bright">
+                  <a href={safeHref(profile.github)} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="transition-colors hover:text-gold-bright">
                     <GitHubIcon size={18} />
                   </a>
-                  <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" title="LinkedIn" className="transition-colors hover:text-gold-bright">
+                  <a href={safeHref(profile.linkedin)} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" className="transition-colors hover:text-gold-bright">
                     <LinkedInIcon size={17} />
                   </a>
-                  <a href={mailHref(profile.email)} aria-label="Email" title="Email" className="transition-colors hover:text-gold-bright">
+                  <a href={mailHref(profile.email)} target="_blank" rel="noopener noreferrer" aria-label="Email" title="Email" className="transition-colors hover:text-gold-bright">
                     <EmailIcon size={18} />
                   </a>
                 </div>

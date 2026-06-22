@@ -22,10 +22,10 @@ export default function ContactRow({ kicker = "LET'S TALK —" }: { kicker?: str
   return (
     <div style={{ marginTop: 'clamp(40px,6vw,72px)', display: 'flex', gap: 11, alignItems: 'center', flexWrap: 'wrap' }}>
       <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.16em', color: '#2F4A3C' }}>{kicker}</span>
-      <a href={safeHref(profile.github)} aria-label="GitHub" style={box} className="hover:!bg-forest hover:!text-paper"><GitHubIcon size={18} /></a>
-      <a href={safeHref(profile.linkedin)} aria-label="LinkedIn" style={box} className="hover:!bg-forest hover:!text-paper"><LinkedInIcon size={17} /></a>
-      <a href={mailHref(profile.email)} aria-label="Email" style={box} className="hover:!bg-forest hover:!text-paper"><EmailIcon size={18} /></a>
-      <a href={profile.resumeUrl} style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em', color: '#FCFAF6', background: '#2F4A3C', padding: '11px 18px', borderRadius: 8, marginLeft: 4 }}>RÉSUMÉ</a>
+      <a href={safeHref(profile.github)} target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={box} className="hover:!bg-forest hover:!text-paper"><GitHubIcon size={18} /></a>
+      <a href={safeHref(profile.linkedin)} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={box} className="hover:!bg-forest hover:!text-paper"><LinkedInIcon size={17} /></a>
+      <a href={mailHref(profile.email)} target="_blank" rel="noopener noreferrer" aria-label="Email" style={box} className="hover:!bg-forest hover:!text-paper"><EmailIcon size={18} /></a>
+      <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.04em', color: '#FCFAF6', background: '#2F4A3C', padding: '11px 18px', borderRadius: 8, marginLeft: 4 }}>RÉSUMÉ</a>
     </div>
   )
 }
