@@ -136,7 +136,15 @@ a {
     width: 0;
   }
   to {
-    width: 13ch;
+    width: 100%;
+  }
+}
+@keyframes caretride {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
   }
 }
 @keyframes termOut {

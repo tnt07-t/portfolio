@@ -22,7 +22,7 @@ import { BookActiveContext } from './book/bookActive'
  * the title is always present and there's no hydration mismatch. Under
  * prefers-reduced-motion it stays whole and never animates.
  */
-const TYPE_MS = 80 // per char on the one-time reveal
+const TYPE_MS = 60 // per char on the one-time reveal
 const FALLBACK_MS = 1800 // routes only: type anyway if the observer never fires
 
 const useIso = typeof window !== 'undefined' ? useLayoutEffect : useEffect

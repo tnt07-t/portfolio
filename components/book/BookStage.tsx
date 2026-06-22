@@ -96,7 +96,6 @@ export default function BookStage() {
   // headings so they type themselves in when their page lands (not all at once).
   const [activeId, setActiveId] = useState<string | null>(null)
   const lastActiveRef = useRef<string | null>(null)
-  const lastScrollRef = useRef(0)
 
   const stageRef = useRef<HTMLDivElement>(null)
   const pageRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -269,16 +268,11 @@ export default function BookStage() {
       }
 
       // Publish the page coming into view (only on change) so its heading can
-      // type in. Switch to the incoming page as soon as the current one starts
-      // turning — in the direction of travel — so the next title is already
-      // typing while a chapter is mid-flip, going forward OR backward, not only
-      // after the flip lands. Forward: as page i begins turning (f>0.05) the
-      // revealed page is i+1. Backward (un-flipping, f falling): page i comes
-      // back, so it's active until the turn is nearly whole again (f>0.95).
-      const goingBack = scroll < lastScrollRef.current
-      lastScrollRef.current = scroll
-      const thr = goingBack ? 0.95 : 0.05
-      const incoming = i < N - 1 && f > thr
+      // type in. Switch to the incoming page at the MIDPOINT of the turn (f>0.5),
+      // so a title begins typing only once the flip to its page is half done and
+      // the page is actually coming into view — not the instant the turn starts,
+      // when the page is still edge-on and the user can't see it yet.
+      const incoming = i < N - 1 && f > 0.5
       const activeDomId = PAGES[incoming ? i + 1 : i].domId ?? null
       if (lastActiveRef.current !== activeDomId) {
         lastActiveRef.current = activeDomId

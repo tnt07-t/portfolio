@@ -53,9 +53,9 @@ function Popup({
         </div>
       )}
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: MONO, fontSize: 7, letterSpacing: '0.1em', color: '#C9A24B' }}>{popup.kicker}</div>
-        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 13.5, color: '#E6C77C', lineHeight: 1.1 }}>{popup.title}</div>
-        <div style={{ fontFamily: MONO, fontSize: 7, letterSpacing: '0.08em', color: 'rgba(201,162,75,0.65)' }}>{popup.sub}</div>
+        <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.1em', color: '#C9A24B' }}>{popup.kicker}</div>
+        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 15, color: '#E6C77C', lineHeight: 1.1 }}>{popup.title}</div>
+        <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.08em', color: 'rgba(201,162,75,0.65)' }}>{popup.sub}</div>
       </div>
     </div>
   )
@@ -113,11 +113,11 @@ export default function Cover() {
 
           {/* focus callout */}
           <div style={{ position: 'absolute', right: 0, top: '63%', zIndex: 7, maxWidth: '27%', textAlign: 'right', animation: 'popIn .6s ease 7.85s both' }}>
-            <div style={{ fontFamily: MONO, fontSize: 7, letterSpacing: '0.1em', color: '#C9A24B' }}>{coverFocus.kicker}</div>
+            <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.1em', color: '#C9A24B' }}>{coverFocus.kicker}</div>
             {coverFocus.lines.map((line, i) => (
-              <div key={line} style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 13.5, color: '#E6C77C', lineHeight: 1.1, marginTop: i === 0 ? 0 : 2 }}>{line}</div>
+              <div key={line} style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 15, color: '#E6C77C', lineHeight: 1.1, marginTop: i === 0 ? 0 : 2 }}>{line}</div>
             ))}
-            <div style={{ fontFamily: MONO, fontSize: 7, letterSpacing: '0.08em', color: 'rgba(201,162,75,0.65)' }}>{coverFocus.sub}</div>
+            <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.08em', color: 'rgba(201,162,75,0.65)' }}>{coverFocus.sub}</div>
           </div>
 
           {/* the laptop */}
@@ -129,32 +129,45 @@ export default function Cover() {
                 <div data-reveal style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(14px,1.8vw,22px)', padding: 'clamp(14px,2vw,26px)', opacity: 0, animation: 'fadeUp .8s ease 0.55s both' }}>
                   <Image src="/assets/author.png" alt={`Portrait of ${profile.name}`} width={356} height={448} style={{ flex: '0 0 auto', height: 'clamp(142px,18vw,212px)', width: 'auto', maxWidth: '47%', objectFit: 'cover', objectPosition: '50% 28%', borderRadius: 9, border: '1px solid rgba(201,162,75,0.5)', boxShadow: '0 12px 28px rgba(0,0,0,0.55)' }} priority />
                   <div style={{ minWidth: 0 }}>
-                    <h1 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(24px,2.9vw,40px)', lineHeight: 0.9, letterSpacing: '0.01em', color: '#E8C97A', textShadow: '0 1px 2px rgba(0,0,0,0.55)', whiteSpace: 'nowrap' }}>{profile.name}</h1>
-                    <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(11px,1.25vw,14px)', color: 'rgba(216,180,94,0.92)', marginTop: 3, whiteSpace: 'nowrap' }}>{profile.tagline}</div>
+                    <h1 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(26px,3.1vw,43px)', lineHeight: 0.9, letterSpacing: '0.01em', color: '#E8C97A', textShadow: '0 1px 2px rgba(0,0,0,0.55)', whiteSpace: 'nowrap' }}>{profile.name}</h1>
+                    <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(12px,1.4vw,15.5px)', color: 'rgba(216,180,94,0.92)', marginTop: 3, whiteSpace: 'nowrap' }}>{profile.tagline}</div>
                     <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
                       <a href={safeHref(profile.github)} target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><GitHubIcon size={14} /></a>
                       <a href={safeHref(profile.linkedin)} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><LinkedInIcon size={13} /></a>
                       <a href={mailHref(profile.email)} target="_blank" rel="noopener noreferrer" aria-label="Email" title="Email" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><EmailIcon size={14} /></a>
                       <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" aria-label="Résumé" title="Résumé" style={socialBox} className="hover:!bg-gold hover:!text-cover hover:!border-gold"><ResumeIcon size={13} /></a>
                     </div>
-                    <p style={{ fontFamily: SERIF, fontSize: 'clamp(9px,0.95vw,11.5px)', lineHeight: 1.45, color: 'rgba(216,180,94,0.82)', marginTop: 10, maxWidth: '30ch', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{profile.bio}</p>
+                    <p style={{ fontFamily: SERIF, fontSize: 'clamp(10.5px,1.1vw,13.5px)', lineHeight: 1.45, color: 'rgba(216,180,94,0.82)', marginTop: 10, maxWidth: '30ch', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{profile.bio}</p>
                   </div>
                 </div>
 
-                {/* terminal line: types the categories */}
-                <div style={{ position: 'absolute', left: 0, right: 0, bottom: 9, height: 14, textAlign: 'center', fontFamily: MONO, fontSize: 10, color: '#A6D2AE' }}>
+                {/* terminal line: types each category left-to-right, the caret
+                    riding to the end of its own text (no fixed-width box, so the
+                    caret always lands right after the last character). */}
+                <div style={{ position: 'absolute', left: 0, right: 0, bottom: 9, height: 14, fontFamily: MONO, fontSize: 11, color: '#A6D2AE' }}>
                   {coverTerminal.map((cmd, i) => {
-                    const anims = [
-                      'fadeIn .01s linear 1.6s forwards, typech .8s steps(9) 1.6s forwards, termOut .3s ease 2.9s forwards',
-                      'fadeIn .01s linear 3.1s forwards, typech .8s steps(9) 3.1s forwards, termOut .3s ease 4.4s forwards',
-                      'fadeIn .01s linear 4.6s forwards, typech .9s steps(13) 4.6s forwards, termOut .3s ease 6.8s forwards',
-                      'fadeIn .01s linear 6.9s forwards, typech .6s steps(7) 6.9s forwards',
-                    ]
+                    const len = cmd.length
+                    const sched = [
+                      { start: 1.6, type: 0.8, out: 2.9 },
+                      { start: 3.1, type: 0.8, out: 4.4 },
+                      { start: 4.6, type: 0.9, out: 6.8 },
+                      { start: 6.9, type: 0.6, out: null as number | null },
+                    ][i]
+                    const rowAnim =
+                      `fadeIn .01s linear ${sched.start}s both` +
+                      (sched.out != null ? `, termOut .3s ease ${sched.out}s forwards` : '')
                     return (
-                      <span key={cmd} style={{ position: 'absolute', left: 0, right: 0, display: 'block', overflow: 'hidden', whiteSpace: 'nowrap', width: '13ch', margin: '0 auto', opacity: 0, animation: anims[i] }}>{cmd}</span>
+                      <div
+                        key={cmd}
+                        style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, animation: rowAnim }}
+                      >
+                        <div style={{ position: 'relative', width: `calc(${len}ch + 2px)`, height: 14 }}>
+                          <span style={{ position: 'absolute', left: 0, top: 0, lineHeight: '14px', overflow: 'hidden', whiteSpace: 'nowrap', width: 0, animation: `typech ${sched.type}s steps(${len}, jump-start) ${sched.start}s both` }}>{cmd}</span>
+                          <span aria-hidden style={{ position: 'absolute', left: 0, top: 1.5, width: 6, height: 11, background: '#C9A24B', animation: `caretride ${sched.type}s steps(${len}, jump-start) ${sched.start}s both, blink 1s step-end infinite ${sched.start}s` }} />
+                        </div>
+                      </div>
                     )
                   })}
-                  <span style={{ position: 'absolute', left: '50%', marginLeft: 46, top: 1, width: 6, height: 11, background: '#C9A24B', animation: 'blink 1s step-end infinite 1.6s' }} />
                 </div>
               </div>
               {/* laptop base */}
