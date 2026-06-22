@@ -2,7 +2,7 @@ import type { CoverPopup, CoverFocus } from '@/lib/types'
 
 /** Animated gold "road" labels orbiting the laptop on the cover. */
 export const coverPopups: CoverPopup[] = [
-  { kicker: '> cornell', title: 'Cornell AppDev', sub: 'DESIGN · iOS', side: 'left', top: '8%', thumb: true },
+  { kicker: '> cornell', title: 'Cornell AppDev', sub: 'Backend Developer', side: 'left', top: '8%', thumb: true },
   { kicker: '> research', title: 'Lumeo Research Lab', sub: 'Route Optimization· Backend Developer + Researcher', side: 'left', top: '39%' },
   { kicker: '> experiences', title: 'FPT Software', sub: '60K ENTERPRISE · IN TESTING', side: 'left', top: '72%' },
   { kicker: '> experiences', title: 'SupplyBistro', sub: 'Full-stack SWE Intern', side: 'right', top: '12%', thumb: true },
