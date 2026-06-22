@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import type { Chapter } from '@/lib/types'
 import Wordmark from '@/components/nav/Wordmark'
+import PaperGrain from '@/components/PaperGrain'
 import ContactRow from './ContactRow'
 
 const MONO = 'var(--font-mono)'
@@ -32,6 +33,7 @@ export default function ChapterShell({
       className="relative min-h-screen w-full bg-paper text-ink"
       style={{ animation: 'fadeUp .5s ease both' }}
     >
+      <PaperGrain />
       <Wordmark revealed />
 
       <div
