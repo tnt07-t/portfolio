@@ -1,23 +1,26 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Caret from './Caret'
 
 /**
- * A chapter title that idly "rewrites" itself: it deletes the last couple of
- * characters, retypes them, and — once whole again — holds for a few seconds
- * before the next pass. The blinking caret rides along at the end. Nothing
- * ever fully clears; it only ever nibbles the tail, so the title stays legible.
+ * A chapter title that types itself out ONCE, the first time it scrolls into
+ * view, then rests — no looping, no blink. A solid caret trails the text as a
+ * quiet "this was just written" mark. Motion resolves and stays calm, so it
+ * never competes with the content a recruiter is reading.
  *
- * SSR-safe: first paint renders the full text (state starts whole), so there's
- * no hydration mismatch and no-JS users still get the complete title. Under
- * prefers-reduced-motion the loop never starts and the title stays static.
+ * SSR/no-JS safe: first paint renders the full title (state starts whole), so
+ * there's no hydration mismatch and the title is always present without JS.
+ * Under prefers-reduced-motion it stays whole and never animates. A fallback
+ * timer guarantees the title types even if the observer never fires (e.g. the
+ * 3D book stage), so it can't get stuck blank.
  */
-const DELETE_COUNT = 2
-const DELETE_MS = 180 // per char while erasing
-const TYPE_MS = 260 // per char while retyping
-const HOLD_MIN_MS = 450 // brief beat at the shortest point
-const HOLD_FULL_MS = 2600 // pause once the title is whole
+const TYPE_MS = 80 // per char on the one-time reveal
+const FALLBACK_MS = 1800 // type anyway if the observer hasn't fired by now
+
+// Run before paint on the client (avoids a full→empty flash) but fall back to
+// useEffect on the server, where useLayoutEffect would warn.
+const useIso = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function TypingTitle({
   text,
@@ -28,48 +31,58 @@ export default function TypingTitle({
 }) {
   const full = text.length
   const [count, setCount] = useState(full)
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const ref = useRef<HTMLSpanElement>(null)
+  const started = useRef(false)
+
+  const willAnimate = () =>
+    !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches && full > 0
+
+  // Hide to empty before paint when we're going to type, so there's no flash.
+  useIso(() => {
+    if (willAnimate()) setCount(0)
+  }, [full])
 
   useEffect(() => {
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    if (reduce || full <= 1) return
+    if (!willAnimate()) return
+    const el = ref.current
+    if (!el) return
 
-    const min = Math.max(1, full - DELETE_COUNT)
-    let c = full
-    let erasing = true
-
-    const tick = () => {
-      if (erasing) {
-        if (c > min) {
-          c -= 1
-          setCount(c)
-          timer.current = setTimeout(tick, DELETE_MS)
-        } else {
-          erasing = false
-          timer.current = setTimeout(tick, HOLD_MIN_MS)
-        }
-      } else {
-        if (c < full) {
-          c += 1
-          setCount(c)
-          timer.current = setTimeout(tick, TYPE_MS)
-        } else {
-          erasing = true
-          timer.current = setTimeout(tick, HOLD_FULL_MS)
-        }
+    let typeTimer: ReturnType<typeof setTimeout> | undefined
+    const start = () => {
+      if (started.current) return
+      started.current = true
+      let c = 0
+      const tick = () => {
+        c += 1
+        setCount(c)
+        if (c < full) typeTimer = setTimeout(tick, TYPE_MS)
       }
+      tick()
     }
 
-    timer.current = setTimeout(tick, HOLD_FULL_MS)
-    return () => clearTimeout(timer.current)
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect()
+          start()
+        }
+      },
+      { threshold: 0.35 },
+    )
+    io.observe(el)
+    const fallback = setTimeout(start, FALLBACK_MS)
+
+    return () => {
+      io.disconnect()
+      clearTimeout(fallback)
+      if (typeTimer) clearTimeout(typeTimer)
+    }
   }, [full])
 
   return (
-    <>
+    <span ref={ref}>
       {text.slice(0, count)}
-      <Caret color={caretColor} />
-    </>
+      <Caret color={caretColor} blink={false} />
+    </span>
   )
 }
