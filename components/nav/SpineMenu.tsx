@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { contents, profile } from '@/lib/content'
+import { scrollToChapter } from '@/components/book/bookNav'
 import { GitHubIcon, LinkedInIcon, EmailIcon, ResumeIcon, mailHref, safeHref } from '@/components/book/icons'
 
 const SERIF = 'var(--font-cormorant)'
@@ -13,12 +14,15 @@ const MONO = 'var(--font-mono)'
 /**
  * The book-spine hamburger. Lives top-left where the cover's vertical spine is.
  * Three gold rules → click expands a vertical panel (the spine "opening") with
- * the chapters + résumé + socials. Navigation rides the route cross-fade in
- * app/template.tsx. Keyboard-accessible; reduced-motion → instant panel.
+ * the chapters + résumé + socials. On the book page a contents entry just
+ * scrolls to that chapter's section (no route change); from a standalone
+ * chapter route it returns home to that section. Keyboard-accessible;
+ * reduced-motion → instant panel.
  */
 export default function SpineMenu() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
   const reduce = useReducedMotion()
   const panelRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
@@ -27,11 +31,17 @@ export default function SpineMenu() {
   const onCover = pathname === '/'
   const lineColor = open ? '#E8C97A' : onCover ? '#C9A24B' : '#2F4A3C'
 
-  // Close the menu and release its scroll lock; the <Link> itself does the
-  // client-side navigation to the chapter route (Cover → "/").
-  const closeMenu = () => {
+  // A contents entry stays on the page: when the book is mounted (home), flow-
+  // scroll to that section through the page-flip; from a standalone chapter
+  // route there's no book, so go home with a hash and the book opens scrolled
+  // to it. Either way no new chapter page is loaded.
+  const goTo = (href: string) => (e: React.MouseEvent) => {
+    e.preventDefault()
     setOpen(false)
     document.body.style.overflow = ''
+    if (!scrollToChapter(href)) {
+      router.push(href === '/' ? '/' : `/#${href.replace(/^\//, '')}`)
+    }
   }
 
   // Close on route change.
@@ -145,7 +155,7 @@ export default function SpineMenu() {
                 {/* Cover — the masthead, no page number. */}
                 <Link
                   href="/"
-                  onClick={closeMenu}
+                  onClick={goTo('/')}
                   className="py-[8px]"
                   style={{
                     fontFamily: MONO,
@@ -164,7 +174,7 @@ export default function SpineMenu() {
                     <Link
                       key={entry.href}
                       href={entry.href}
-                      onClick={closeMenu}
+                      onClick={goTo(entry.href)}
                       className="flex items-baseline gap-3 py-[9px] transition-colors hover:text-gold-bright"
                       style={{ color: active ? '#E8C97A' : '#F3ECDF' }}
                     >

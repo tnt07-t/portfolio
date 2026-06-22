@@ -6,6 +6,7 @@ import Cover from './Cover'
 import Highlights from './Highlights'
 import ChapterLeaf from './ChapterLeaf'
 import Wordmark from '@/components/nav/Wordmark'
+import { registerBookNav } from './bookNav'
 
 interface PageDescriptor {
   key: string
@@ -96,6 +97,10 @@ export default function BookStage() {
   const curlRefs = useRef<(HTMLDivElement | null)[]>([])
   const barRef = useRef<HTMLElement>(null)
   const geomRef = useRef<Geom | null>(null)
+  // Mirror `flip` into a ref so the registered scroll handler (stable identity)
+  // always reads the current mode without re-registering.
+  const flipRef = useRef(false)
+  flipRef.current = flip
 
   // Decide the mode before paint, and keep it in sync with viewport / motion pref.
   useLayoutEffect(() => {
@@ -110,6 +115,35 @@ export default function BookStage() {
       mq.removeEventListener?.('change', decide)
       window.removeEventListener('resize', decide)
     }
+  }, [])
+
+  // Register the contents-click handler so the global SpineMenu (which lives in
+  // the layout, outside this React tree) can drive an in-page scroll. Clicking a
+  // contents entry stays on the page and smooth-scrolls to that chapter's
+  // section — in flip mode the scroll-driven engine plays the page-turns along
+  // the way and lands on the chapter. Deferred a frame so the menu's close
+  // (which releases its scroll-lock) settles first, else the scroll is dropped.
+  useEffect(() => {
+    registerBookNav((target: string) => {
+      const idx = pageIndexForTarget(target)
+      if (idx < 0) return
+      const behavior: ScrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)')
+        .matches
+        ? 'auto'
+        : 'smooth'
+      requestAnimationFrame(() => {
+        const stage = stageRef.current
+        const geom = geomRef.current
+        if (flipRef.current && stage && geom) {
+          const top = stage.getBoundingClientRect().top + window.scrollY + geom.offset[idx]
+          window.scrollTo({ top, behavior })
+        } else {
+          // Plain base (mobile / reduced-motion): scroll the section into view.
+          document.getElementById(PAGES[idx].domId)?.scrollIntoView({ behavior, block: 'start' })
+        }
+      })
+    })
+    return () => registerBookNav(null)
   }, [])
 
   // The pinned page-flip engine. Runs only in flip mode.
