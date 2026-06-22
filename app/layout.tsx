@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import SpineMenu from '@/components/nav/SpineMenu'
 
 // Body / UI sans.
 const inter = Inter({
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${cormorant.variable} ${jetbrains.variable}`}
       >
+        <SpineMenu />
         {children}
       </body>
     </html>
