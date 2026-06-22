@@ -4,7 +4,7 @@
 
 /* ── Design tokens (warm green ink + gold), ported from Portfolio.dc.html ── */
 :root {
-  --paper: #f6efdf;
+  --paper: #fcfaf6;
   --ink: #1a1714;
   --ink-faded: #6b6358;
   --ink-quiet: #9a9082;

@@ -8,7 +8,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: '#F6EFDF',
+        paper: '#FCFAF6',
         ink: {
           DEFAULT: '#1A1714',
           faded: '#6B6358',

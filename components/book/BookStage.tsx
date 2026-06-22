@@ -50,8 +50,8 @@ const PAGES: PageDescriptor[] = [
   ...chapters.map((c, i) => ({
     key: c.title,
     node: <ChapterLeaf chapter={c} closing={i === chapters.length - 1} />,
-    frontBg: '#F6EFDF',
-    backBg: '#EFE7D4',
+    frontBg: '#FCFAF6',
+    backBg: '#F4EFE6',
     href: c.href,
     domId: c.href.replace(/^\//, ''),
   })),
