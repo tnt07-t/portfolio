@@ -79,9 +79,8 @@ export default function Cover() {
       {/* vignette */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 82% 72% at 50% 42%, rgba(48,76,60,0.55), rgba(9,15,11,0.94) 100%)' }} />
 
-      {/* left spine */}
+      {/* left spine (the global SpineMenu hamburger lives over its top) */}
       <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 'clamp(26px,3.2vw,42px)', background: '#101A14', borderRight: '1px solid rgba(201,162,75,0.28)', zIndex: 5 }}>
-        <div style={{ position: 'absolute', top: 22, left: 8, right: 8, height: 1, background: 'rgba(201,162,75,0.4)' }} />
         <div style={{ position: 'absolute', bottom: 22, left: 8, right: 8, height: 1, background: 'rgba(201,162,75,0.4)' }} />
       </div>
 
@@ -128,7 +127,7 @@ export default function Cover() {
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.24, animation: 'glow 2.8s ease-in-out infinite', background: 'radial-gradient(circle at 50% 40%, rgba(143,182,143,0.18), transparent 72%)' }} />
 
                 <div data-reveal style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'clamp(14px,1.8vw,22px)', padding: 'clamp(14px,2vw,26px)', opacity: 0, animation: 'fadeUp .8s ease 0.55s both' }}>
-                  <Image src="/assets/author.jpg" alt={`Portrait of ${profile.name}`} width={212} height={212} style={{ flex: '0 0 auto', height: 'clamp(142px,18vw,212px)', width: 'auto', maxWidth: '47%', objectFit: 'cover', objectPosition: '50% 12%', borderRadius: 9, border: '1px solid rgba(201,162,75,0.5)', boxShadow: '0 12px 28px rgba(0,0,0,0.55)' }} priority />
+                  <Image src="/assets/author.png" alt={`Portrait of ${profile.name}`} width={356} height={448} style={{ flex: '0 0 auto', height: 'clamp(142px,18vw,212px)', width: 'auto', maxWidth: '47%', objectFit: 'cover', objectPosition: '50% 28%', borderRadius: 9, border: '1px solid rgba(201,162,75,0.5)', boxShadow: '0 12px 28px rgba(0,0,0,0.55)' }} priority />
                   <div style={{ minWidth: 0 }}>
                     <h1 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(24px,2.9vw,40px)', lineHeight: 0.9, letterSpacing: '0.01em', color: '#E8C97A', textShadow: '0 1px 2px rgba(0,0,0,0.55)', whiteSpace: 'nowrap' }}>{profile.name}</h1>
                     <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 'clamp(11px,1.25vw,14px)', color: 'rgba(216,180,94,0.92)', marginTop: 3, whiteSpace: 'nowrap' }}>{profile.tagline}</div>
