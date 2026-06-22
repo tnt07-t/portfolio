@@ -8,6 +8,7 @@ import ChapterLeaf from './ChapterLeaf'
 import Wordmark from '@/components/nav/Wordmark'
 import PaperGrain from '@/components/PaperGrain'
 import { registerBookNav } from './bookNav'
+import { BookActiveContext } from './bookActive'
 
 interface PageDescriptor {
   key: string
@@ -91,6 +92,10 @@ export default function BookStage() {
   // Plain stacked scroll is the SSR-safe base; we upgrade to the pinned
   // page-flip engine on desktop after mount (progressive enhancement).
   const [flip, setFlip] = useState(false)
+  // Which page is currently flat/active in the flip stage — published to chapter
+  // headings so they type themselves in when their page lands (not all at once).
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const lastActiveRef = useRef<string | null>(null)
 
   const stageRef = useRef<HTMLDivElement>(null)
   const pageRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -261,6 +266,13 @@ export default function BookStage() {
         bar.style.transform = show ? 'translateY(0)' : 'translateY(-105%)'
         bar.style.opacity = show ? '1' : '0'
       }
+
+      // Publish the active page (only on change) so its heading can type in.
+      const activeDomId = PAGES[i].domId ?? null
+      if (lastActiveRef.current !== activeDomId) {
+        lastActiveRef.current = activeDomId
+        setActiveId(activeDomId)
+      }
     }
 
     const onScroll = () => {
@@ -310,7 +322,7 @@ export default function BookStage() {
   // Plain base: every page is a normal stacked section, natural scroll, no 3D.
   if (!flip) {
     return (
-      <>
+      <BookActiveContext.Provider value={{ mode: 'plain', activeId: null }}>
         {grain}
         <Wordmark revealed />
         {PAGES.map((page) => (
@@ -327,13 +339,13 @@ export default function BookStage() {
             {page.node}
           </section>
         ))}
-      </>
+      </BookActiveContext.Provider>
     )
   }
 
   // Flip mode: one tall stage with a pinned 100vh viewport; pages turn on scroll.
   return (
-    <>
+    <BookActiveContext.Provider value={{ mode: 'flip', activeId }}>
       {grain}
       <Wordmark ref={barRef} />
       <div id="top" />
@@ -413,6 +425,6 @@ export default function BookStage() {
           ))}
         </div>
       </div>
-    </>
+    </BookActiveContext.Provider>
   )
 }

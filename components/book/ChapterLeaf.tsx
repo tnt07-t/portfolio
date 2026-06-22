@@ -39,7 +39,7 @@ export default function ChapterLeaf({
     <div className="relative w-full" style={{ padding: 'clamp(88px,12vh,150px) clamp(28px,7vw,110px) clamp(40px,6vh,80px)' }}>
       <div style={{ maxWidth: 920, margin: '0 auto', width: '100%' }}>
         <div style={{ fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: '#2F4A3C' }}>{chapter.number}</div>
-        <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(42px,7vw,96px)', letterSpacing: '-0.02em', lineHeight: 0.95, marginTop: 14, color: 'var(--forest-deep)' }}><TypingTitle text={chapter.title} caretColor="var(--forest-deep)" /></h2>
+        <h2 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 'clamp(42px,7vw,96px)', letterSpacing: '-0.02em', lineHeight: 0.95, marginTop: 14, color: 'var(--forest-deep)' }}><TypingTitle text={chapter.title} caretColor="var(--forest-deep)" triggerId={chapter.href.replace(/^\//, '')} /></h2>
         <p style={{ marginTop: 16, fontSize: 'clamp(16px,1.8vw,20px)', color: '#6B6358', maxWidth: '56ch' }}>
           {chapter.blurb}
         </p>
