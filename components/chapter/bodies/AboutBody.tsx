@@ -7,7 +7,7 @@ const DISPLAY = 'var(--font-cabinet)'
  *  and the in-book chapter leaf. */
 export default function AboutBody() {
   return (
-    <div style={{ display: 'grid', gap: 'clamp(24px,4vw,40px)', maxWidth: '64ch' }}>
+    <div style={{ display: 'grid', gap: 'clamp(24px,4vw,40px)' }}>
       {aboutSections.map((s, i) => (
         <FloatIn key={s.heading} index={i}>
         <section style={{ background: '#FFFFFF', border: '1px solid rgba(26,23,20,0.06)', borderRadius: 4, padding: 'clamp(20px,2.8vw,30px)', boxShadow: '0 1px 2px rgba(22,36,27,0.05), 0 10px 30px rgba(22,36,27,0.06)' }}>
