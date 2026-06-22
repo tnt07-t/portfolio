@@ -11,11 +11,14 @@ export default function Caret({ color = 'currentColor' }: { color?: string }) {
       aria-hidden
       style={{
         display: 'inline-block',
-        width: '0.065em',
-        height: '0.78em',
-        marginLeft: '0.16em',
+        width: '0.07em',
+        height: '0.72em',
+        marginLeft: '0.12em',
         background: color,
         verticalAlign: 'baseline',
+        // Bottom sits on the baseline; nudge down a touch so the caret reads as
+        // grounded on the writing line rather than floating above it.
+        transform: 'translateY(0.06em)',
         animation: 'blink 1.05s step-end infinite',
       }}
     />
