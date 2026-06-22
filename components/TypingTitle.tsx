@@ -14,9 +14,9 @@ import Caret from './Caret'
  * prefers-reduced-motion the loop never starts and the title stays static.
  */
 const DELETE_COUNT = 2
-const DELETE_MS = 70 // per char while erasing
-const TYPE_MS = 115 // per char while retyping
-const HOLD_MIN_MS = 280 // brief beat at the shortest point
+const DELETE_MS = 180 // per char while erasing
+const TYPE_MS = 260 // per char while retyping
+const HOLD_MIN_MS = 450 // brief beat at the shortest point
 const HOLD_FULL_MS = 2600 // pause once the title is whole
 
 export default function TypingTitle({
